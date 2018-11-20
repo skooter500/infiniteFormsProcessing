@@ -1,6 +1,7 @@
 void crossShape()
 {
   clearBoard();
+  //generation = 0;
   int halfW = boardWidth / 2;
   int halfH = boardHeight / 2;  
   for (int i = 0; i < boardWidth; i ++)
@@ -50,7 +51,7 @@ void startLife()
   //buffer.colorMode(HSB);
 }
 
-int boardWidth = 100;
+int boardWidth = 200;
 int boardHeight;
 float cellWidth;
 float[][] board = new float[boardHeight][boardWidth];
@@ -152,8 +153,8 @@ float randomAround(int row, int col)
 
 void randomise()
 {
-  clearBoard();
-  
+  //clearBoard();
+  generation = 0;
   for (int row = 0; row < boardHeight; row ++) {
     for (int col = 0; col < boardWidth; col ++) {
       if (random(0, 1) < 0.5f)
@@ -194,7 +195,7 @@ void randomLife()
     updateBoard();
   drawBoard();
 
-  if (generation == 100)
+  if (generation == 600)
   {
     randomise();
   }
@@ -208,7 +209,7 @@ void patternLife()
     updateBoard();
   drawBoard();
 
-  if (generation == 50)
+  if (generation == 500)
   {
     crossShape();
   }
