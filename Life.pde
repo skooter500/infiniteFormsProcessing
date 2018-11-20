@@ -13,8 +13,10 @@ void crossShape()
   }
 }
 
+int generation = 0;
+
 void xShape()
-{
+{  
   clearBoard();
   int half = boardHeight / 2;
   for (int i = 0; i < boardHeight; i ++)
@@ -26,6 +28,7 @@ void xShape()
 
 void clearBoard()
 {
+  background(0);
   for (int row = 0; row < boardHeight; row ++)
   {
     for (int col = 0; col < boardWidth; col ++)
@@ -33,6 +36,7 @@ void clearBoard()
       board[row][col] = -1;
     }
   }
+  generation = 0;
 }
 
 void startLife()
@@ -41,13 +45,12 @@ void startLife()
   boardHeight = round(height / cellWidth);
   board = new float[boardHeight][boardWidth];
   nextBoard  = new float[boardHeight][boardWidth];
-  
+
   //buffer = createGraphics(width, height);
   //buffer.colorMode(HSB);
-  
 }
 
-int boardWidth = 50;
+int boardWidth = 100;
 int boardHeight;
 float cellWidth;
 float[][] board = new float[boardHeight][boardWidth];
@@ -91,6 +94,7 @@ void updateBoard()
   float[][] temp = board;
   board = nextBoard;
   nextBoard = temp;
+  generation ++;
 }
 
 float getElement(int row, int col)
@@ -105,12 +109,12 @@ float randomHue(float[] hue)
 {
   float xsum = 0;
   float ysum = 0;
-  
-  for(float f:hue)
+
+  for (float f : hue)
   {
     float angle = map(f, 0, 255, -PI, PI);
     xsum += cos(angle);
-    ysum += sin(angle);    
+    ysum += sin(angle);
   }
   xsum /= hue.length;
   ysum /= hue.length;
@@ -128,7 +132,7 @@ float randomAround(int row, int col)
   {
     for (int c = col - 1; c <= col + 1; c ++)
     {
-      
+
       float e = getElement(r, c);
       if (!(r == row && c == col)  && e != -1)
       {
@@ -141,13 +145,15 @@ float randomAround(int row, int col)
   }
   xsum /= 3.0f;
   ysum /= 3.0f;
-  
+
   return map(atan2(ysum, xsum), -PI, PI, 0, 255);
 }
 
 
 void randomise()
 {
+  clearBoard();
+  
   for (int row = 0; row < boardHeight; row ++) {
     for (int col = 0; col < boardWidth; col ++) {
       if (random(0, 1) < 0.5f)
@@ -163,38 +169,49 @@ void randomise()
 
 void drawBoard()
 {
-  buffer.beginDraw();
-  buffer.colorMode(RGB);
-  buffer.background(0, 0, 0, 1);
-  buffer.colorMode(HSB);
-  buffer.noStroke();
+  colorMode(RGB);
+  fill(0, 10);
+  rect(0, 0, width, height);
+  colorMode(HSB);
+  noStroke();
   for (int row = 0; row < boardHeight; row ++) {
     for (int col = 0; col < boardWidth; col ++) {
       if (board[row][col] != -1)
       {
-        buffer.fill(board[row][col], 255, 255);
-        buffer.rect(col * cellWidth, row * cellWidth, cellWidth, cellWidth);
+        fill(board[row][col], 255, 255);
+        rect(col * cellWidth, row * cellWidth, cellWidth, cellWidth);
       }
     }
   }
-  
-  buffer.fill(255);
-  println(mouseY/cellWidth);
-  buffer.rect(50, mouseY/cellWidth, 50, 50);
-  
-  
-  buffer.endDraw();
-  image(buffer, 0, 0);
-  
 }
 
-void life()
+void randomLife()
 {
   colorMode(HSB);
   rectMode(CORNER);
-  if (frameCount % 30 == 0)
-  updateBoard();
+  int frame = (int) map(mouseX, 0, width, 1, 20);
+  if (frameCount % frame == 0)
+    updateBoard();
   drawBoard();
+
+  if (generation == 100)
+  {
+    randomise();
+  }
+}
+void patternLife()
+{
+  colorMode(HSB);
+  rectMode(CORNER);
+  int frame = (int) map(mouseX, width, 0, 1, 20);
+  if (frameCount % frame == 0)
+    updateBoard();
+  drawBoard();
+
+  if (generation == 50)
+  {
+    crossShape();
+  }
 }
 
 int countAround(int row, int col)

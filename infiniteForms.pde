@@ -40,7 +40,7 @@ void circles()
 {
   pushStyle();
   noStroke();
-  float gap = width * 1.5 / count;
+  float gap = width * 1.2 / count;
   float colorGap = 255 / count;
   for (float i = count; i >= 0; i --)
   {
@@ -158,16 +158,16 @@ color to;
 
 void restartPatterns()
 {
-  randomise();
+  crossShape();
 }
 
-int MODES = 6;
+int MODES = 7;
 void setup()
 {
   colorMode(HSB);
-  size(800, 600, P3D);
+  //size(800, 600, P3D);
   startLife();
-  //fullScreen(P3D);
+  fullScreen(P3D);
   //noCursor();
   cx = width / 2;
   cy = height / 2;
@@ -181,19 +181,19 @@ void keyPressed()
 {
   if (keyCode == RIGHT)
   {
-    mode = (mode + 1) % MODES;
-    restartPatterns();
+    mode = (mode + 1) % MODES;    
   }
   if (keyCode == LEFT)
   {
-    mode = (mode == 0) ? MODES - 1 : mode - 1 ;
-    restartPatterns();
+    mode = (mode == 0) ? MODES - 1 : mode - 1 ;    
   }
+  restartPatterns();
+    background(0);
 }
 
 void draw()
 {
-  background(0);
+  //background(0);
   float cc = mouseX % 256.0f;
   //background(cc, 255, 255);
   //background(random(0, 255), 255, 255);
@@ -216,7 +216,10 @@ void draw()
     stars();
     break;
   case 5:
-    life();
+    randomLife();
+    break;
+  case 6:
+    patternLife();
     break;
   }
   speed = map(mouseX, 0, width, -0.04, 0.04);
