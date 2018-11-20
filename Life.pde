@@ -42,8 +42,8 @@ void startLife()
   board = new float[boardHeight][boardWidth];
   nextBoard  = new float[boardHeight][boardWidth];
   
-  buffer = createGraphics(width, height);
-  buffer.colorMode(HSB);
+  //buffer = createGraphics(width, height);
+  //buffer.colorMode(HSB);
   
 }
 
