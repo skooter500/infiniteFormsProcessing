@@ -1,46 +1,68 @@
 void crossShape()
 {
   clearBoard();
-  int half = size / 2;
-  for (int i = 0; i < size; i ++)
+  int halfW = boardWidth / 2;
+  int halfH = boardHeight / 2;  
+  for (int i = 0; i < boardWidth; i ++)
   {
-    board[i][half] = random(255);
-    board[half][i] = random(255);
+    board[halfH][i] = random(255);
+  }
+  for (int i = 0; i < boardHeight; i ++)
+  {
+    board[i][halfW] = random(255);
   }
 }
 
 void xShape()
 {
   clearBoard();
-  int half = size / 2;
-  for (int i = 0; i < size; i ++)
+  int half = boardHeight / 2;
+  for (int i = 0; i < boardHeight; i ++)
   {
     board[i][i] = random(255);
-    board[(size - 1) - i][i] = random(255);
+    board[(boardWidth - 1) - i][i] = random(255);
   }
 }
 
 void clearBoard()
 {
-  for (int row = 0; row < size; row ++)
+  for (int row = 0; row < boardHeight; row ++)
   {
-    for (int col = 0; col < size; col ++)
+    for (int col = 0; col < boardWidth; col ++)
     {
       board[row][col] = -1;
     }
   }
 }
 
-int size = 200;
+void startLife()
+{
+  cellWidth = width / (float) boardWidth;
+  boardHeight = round(height / cellWidth);
+  board = new float[boardHeight][boardWidth];
+  nextBoard  = new float[boardHeight][boardWidth];
+  
+  buffer = createGraphics(width, height);
+  buffer.colorMode(HSB);
+  
+}
 
-float[][] board = new float[size][size];
-float[][] nextBoard  = new float[size][size];
+int boardWidth = 50;
+int boardHeight;
+float cellWidth;
+float[][] board = new float[boardHeight][boardWidth];
+float[][] nextBoard  = new float[boardHeight][boardWidth];
+
+PGraphics buffer;
+
+int numAlive = 0;
 
 void updateBoard()
 {
-  for (int row = 0; row < size; row ++)
+  numAlive = 0;
+  for (int row = 0; row < boardHeight; row ++)
   {
-    for (int col = 0; col < size; col ++)
+    for (int col = 0; col < boardWidth; col ++)
     {
       int c = countAround(row, col);
       if (board[row][col] >= 0)
@@ -48,6 +70,7 @@ void updateBoard()
         if (c == 2 || c == 3)
         {
           nextBoard[row][col] = board[row][col];
+          numAlive ++;
         } else
         {
           nextBoard[row][col] = -1;
@@ -57,6 +80,7 @@ void updateBoard()
         if (c == 3)
         {
           nextBoard[row][col] = randomAround(row, col);
+          numAlive ++;
         } else
         {
           nextBoard[row][col] = -1;
@@ -71,10 +95,27 @@ void updateBoard()
 
 float getElement(int row, int col)
 {
-  if (row >= 0 && row < size && col >= 0 && col < size)
+  if (row >= 0 && row < boardHeight && col >= 0 && col < boardWidth)
   {
     return board[row][col];
   } else return -1;
+}
+
+float randomHue(float[] hue)
+{
+  float xsum = 0;
+  float ysum = 0;
+  
+  for(float f:hue)
+  {
+    float angle = map(f, 0, 255, -PI, PI);
+    xsum += cos(angle);
+    ysum += sin(angle);    
+  }
+  xsum /= hue.length;
+  ysum /= hue.length;
+  float angle = atan2(ysum, xsum);
+  return map(atan2(ysum, xsum), -PI, PI, 0, 255);
 }
 
 float randomAround(int row, int col)
@@ -87,27 +128,28 @@ float randomAround(int row, int col)
   {
     for (int c = col - 1; c <= col + 1; c ++)
     {
+      
       float e = getElement(r, c);
-      if (r != row && c !=col && e != -1)
+      if (!(r == row && c == col)  && e != -1)
       {
-        float angle = map(e, 0, 255, 0, TWO_PI);
+        float angle = map(e, 0, 255, -PI, PI);
         xsum += cos(angle);
         ysum += sin(angle);       
         ec ++;
       }
     }
   }
-  println(ec); //<>//
   xsum /= 3.0f;
   ysum /= 3.0f;
-  return atan2(ysum, xsum) + PI;
+  
+  return map(atan2(ysum, xsum), -PI, PI, 0, 255);
 }
 
 
 void randomise()
 {
-  for (int row = 0; row < size; row ++) {
-    for (int col = 0; col < size; col ++) {
+  for (int row = 0; row < boardHeight; row ++) {
+    for (int col = 0; col < boardWidth; col ++) {
       if (random(0, 1) < 0.5f)
       {
         board[row][col] = random(255);
@@ -121,27 +163,38 @@ void randomise()
 
 void drawBoard()
 {
-  float cellWidth = width / size;
-  for (int row = 0; row < size; row ++) {
-    for (int col = 0; col < size; col ++) {
+  buffer.beginDraw();
+  buffer.colorMode(RGB);
+  buffer.background(0, 0, 0, 1);
+  buffer.colorMode(HSB);
+  buffer.noStroke();
+  for (int row = 0; row < boardHeight; row ++) {
+    for (int col = 0; col < boardWidth; col ++) {
       if (board[row][col] != -1)
       {
-        fill(board[row][col], 255, 255);
-      } else
-      {
-        fill(0);
+        buffer.fill(board[row][col], 255, 255);
+        buffer.rect(col * cellWidth, row * cellWidth, cellWidth, cellWidth);
       }
-      rect(col * cellWidth, row * cellWidth, cellWidth, cellWidth);
     }
   }
+  
+  buffer.fill(255);
+  println(mouseY/cellWidth);
+  buffer.rect(50, mouseY/cellWidth, 50, 50);
+  
+  
+  buffer.endDraw();
+  image(buffer, 0, 0);
+  
 }
 
 void life()
 {
-  background(0);
   colorMode(HSB);
-  drawBoard();
+  rectMode(CORNER);
+  if (frameCount % 30 == 0)
   updateBoard();
+  drawBoard();
 }
 
 int countAround(int row, int col)
@@ -155,7 +208,7 @@ int countAround(int row, int col)
   {
     count ++;
   }
-  if (row > 0 && col < size -1 && board[row-1][col+1] != -1)
+  if (row > 0 && col < boardWidth -1 && board[row-1][col+1] != -1)
   {
     count ++;
   }
@@ -163,19 +216,19 @@ int countAround(int row, int col)
   {
     count ++;
   }
-  if (col < size - 1 && board[row][col+1] != -1)
+  if (col < boardWidth - 1 && board[row][col+1] != -1)
   {
     count ++;
   }
-  if (col > 0 && row < size -1 && board[row+1][col-1] != -1)
+  if (col > 0 && row < boardHeight -1 && board[row+1][col-1] != -1)
   {
     count ++;
   }
-  if (row < size -1 && board[row + 1][col] != -1)
+  if (row < boardHeight -1 && board[row + 1][col] != -1)
   {
     count ++;
   }
-  if (row < size - 1 && col < size -1 && board[row+1][col+1] != -1) 
+  if (row < boardHeight - 1 && col < boardWidth -1 && board[row+1][col+1] != -1) 
   {
     count ++;
   }

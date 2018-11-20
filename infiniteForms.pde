@@ -156,8 +156,6 @@ color from;
 color to;
 
 
-
-
 void restartPatterns()
 {
   randomise();
@@ -168,8 +166,9 @@ void setup()
 {
   colorMode(HSB);
   size(800, 600, P3D);
+  startLife();
   //fullScreen(P3D);
-  noCursor();
+  //noCursor();
   cx = width / 2;
   cy = height / 2;
 
