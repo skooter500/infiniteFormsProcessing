@@ -20,7 +20,7 @@ void rects()
 float c = 0;
 float speed = 0.0f;
 
-float scale = 0.001;
+float scale = 0.0005;
 
 float box = 50;
 
@@ -28,7 +28,7 @@ float offs = 0;
 
 float theta = 0;
 float timer = 0.0f;
-int sides = 4;
+int sides = 8;
 float gOff = 0;
 
 float cx;
@@ -79,17 +79,22 @@ void stars()
   strokeWeight(60);
   float offset = 0 ;
   translate(cx, cy);  
-  for (float radius = 0; radius < width * 1.6; radius += 60)
+  for (float radius = 0; radius < width * 1.6; radius += 20)
   {
-    offset += 0.1f;
     float t = map(sin(theta + offset), -1.0f, 1.0f, 0.0f, 1.0f);
     color col = color(map(sin(theta + offset), -1, 1, 0, 255), 255, 255) ; // lerpColor(from, to, t);
-    rotate(speed);  
+    //rotate(speed);  
+    offset += 0.1f;    
+    if (radius == 0)
+    {
+      fill(col);
+      ellipse(0, 0, 20, 20);
+    }
     drawStar(0, 0, radius, sides, col);
   }
-  theta += speed / 5;
-  gOff += speed/5;
-  timer += abs(speed/5);
+  theta += speed;
+  gOff += speed;
+  timer += abs(speed);
   popStyle();
 }
 

@@ -1,3 +1,6 @@
+class Life
+{
+
 void crossShape()
 {
   clearBoard();
@@ -26,6 +29,7 @@ void xShape()
     board[(boardWidth - 1) - i][i] = random(255);
   }
 }
+
 
 void clearBoard()
 {
@@ -204,12 +208,12 @@ void patternLife()
 {
   colorMode(HSB);
   rectMode(CORNER);
-  int frame = (int) map(mouseX, width, 0, 1, 20);
+  int frame = (int) map(mouseX, width, 0, 10, 20);
   if (frameCount % frame == 0)
     updateBoard();
   drawBoard();
 
-  if (generation == 500)
+  if (generation == 100)
   {
     crossShape();
   }
@@ -252,4 +256,6 @@ int countAround(int row, int col)
   }
 
   return count;
+}
+
 }
