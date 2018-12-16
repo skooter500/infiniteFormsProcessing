@@ -3,7 +3,7 @@ class FlowField extends Vision
   float offs = 0;
   float scale = 0.0005;
 
-  int box = 40;
+  int box = 30;
 
   void render()
   {
@@ -19,14 +19,14 @@ class FlowField extends Vision
         float cy = y + box / 2;
         pushMatrix();
         translate(cx, cy);
-        rotate(map(noise((cx) * scale, (cy + offs) * scale), 0, 1, 0, TWO_PI));
-        stroke(map(noise((cx) * scale, (cy + offs) * scale), 0, 1, 0.0f, 255.0f), 255, 255);      
+        rotate(map(noise((cx+ offs) * scale, (cy + offs) * scale), 0, 1, 0, TWO_PI));
+        stroke(map(noise((cx + offs) * scale, (cy + offs) * scale), 0, 1, 0.0f, 255.0f), 255, 255);      
         line(0, -30, 0, 30);
         //rect(-10, 10, 20, 20);
         popMatrix();
       }
     }
-    offs += speed * 100;
+    offs += speed * 200;
     popStyle();
   }
 }
