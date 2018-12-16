@@ -14,14 +14,17 @@ void setup()
   colorMode(HSB);
   //size(800, 600);
   fullScreen();
-  //noCursor();
+  noCursor();
   cx = width / 2;
   cy = height / 2;
 
   
   visions.add(new Kaleidoscope());
-  visions.add(new Life(0, 200));
-  visions.add(new Life(1, 200));
+  visions.add(new Life(0, 500));
+  visions.add(new Life(1, 300));
+  visions.add(new Life(2, 400));
+  visions.add(new Life(3, 400));
+  visions.add(new Life(4, 300));
   visions.add(new Rects());
   visions.add(new Circles());
   visions.add(new Triangles());

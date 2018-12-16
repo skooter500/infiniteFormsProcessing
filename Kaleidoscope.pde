@@ -13,7 +13,7 @@ class Kaleidoscope extends Vision
   
   void initialize()
   {
-    p = createGraphics(w, h); //<>//
+    p = createGraphics(w, h);
   }
   
   void render()
