@@ -6,11 +6,12 @@ class Rects extends Vision
 
   void render()
   {
+    background(0);
     rectMode(CENTER);
     noStroke();
     float wgap = width / count;
     float hgap = height / count;
-    float colorGap = 255 / count;
+    float colorGap = 2;
     for (float i = count; i > 0; i --)
     {
       float w = i * wgap;

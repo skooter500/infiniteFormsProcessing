@@ -8,7 +8,7 @@ class Triangles extends Vision
     noStroke();
     float wgap = width * 3 / count;
     float hgap = height * 3 / count;
-    float colorGap = 255 / count;
+    float colorGap = 10;
     for (float i = count; i >= 0; i --)
     {
       float w = i * wgap * 0.5;
