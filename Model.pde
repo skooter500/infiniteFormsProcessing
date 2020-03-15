@@ -1,17 +1,16 @@
-class Cube
-{
+class Model
+{    
+  PShape s;
   PVector position;
-  
   float smoothedBoxSize = 0;
   float angle = 0;
   float weight = 5;
   float size = 50;
-  
-  boolean useAmplitude = true;
-  
-  Cube(float x, float y, float z)
+    
+  Model(String fileName, float x, float y, float z)
   {
-    position = new PVector(x, y, z);
+    s = loadShape(fileName);
+    position = new PVector(x, y, y);
   }
   
   void render()
@@ -24,18 +23,13 @@ class Cube
     rotateY(angle);
     rotateX(angle);
     strokeWeight(weight);
-    if (useAmplitude)
-    {
-      float boxSize = size + (amplitude * 300); 
-      smoothedBoxSize = lerp(smoothedBoxSize, boxSize, 0.2f);                 
-      box(smoothedBoxSize);
-    }
-    else
-    {
-      box(size);
-    }
+    float boxSize = size + (amplitude * 300); 
+    smoothedBoxSize = lerp(smoothedBoxSize, boxSize, 0.2f);
+    
+    scale(smoothedBoxSize);
+    shape(s);
     angle+=0.01f;
-    popMatrix();
+    popMatrix();    
   }
   
 }

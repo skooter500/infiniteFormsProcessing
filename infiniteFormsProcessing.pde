@@ -55,11 +55,16 @@ void setup()
   */
   //
   //visions.add(new Cubes2(2, 100, -250));
+  
+  startMinim();
+  loadAudio("mix.mp3");
+  visions.add(new WaveForm());
   visions.add(new Cubes1());
   visions.add(new Cubes2(2, 150, -600));  
   visions.add(new Cubes2(7, 250, -600));  
   visions.add(new Cubes2(20, 300, -800));
   visions.add(new Cubes2(50, 400, -900));
+  visions.add(new Cubes3(20, 10000));  
   visions.add(new Rects());
   //visions.add(new Circles());
   visions.add(new Star(12, false, false));
@@ -73,9 +78,8 @@ void setup()
   previous = millis();
   
   frameSize = 256;
-  startMinim();
   //startListening();
-  loadAudio("mix.mp3");
+  
   ap.play();
 }
 
@@ -93,6 +97,7 @@ void keyPressed()
 }
 
 long previous;
+float colorOffset = 0;
 
 void draw()
 {
@@ -109,6 +114,7 @@ void draw()
   speed = map(amplitude, 0, 1, 0, 0.1f);
   //numRects = (int) map(mouseY, 0, height, 5, 50);
   //println(frameRate);
+  //colorOffset += 0.1f;
 }
 
 void startMinim() 
