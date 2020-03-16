@@ -2,7 +2,7 @@ class Rects extends Vision
 {
   float box = 50;
 
-  int count = 10;
+  int count = 30;
 
   void render()
   {
@@ -11,7 +11,7 @@ class Rects extends Vision
     noStroke();
     float wgap = width / count;
     float hgap = height / count;
-    float colorGap = 3;
+    float colorGap = 10;
     for (float i = count; i > 0; i --)
     {
       float w = i * wgap;
@@ -20,7 +20,7 @@ class Rects extends Vision
       fill(f, 255, 255);
       rect(width / 2, height / 2, w, h);
 
-      c = (c - speed);
+      c = (c - speed * 5);
     }
   }
 }

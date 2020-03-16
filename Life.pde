@@ -11,7 +11,7 @@ class Life extends Vision
   
   int pattern = 0;
   int generation = 0;
-  int generationMax = 100;
+  int generationMax = 10000;
   
   Life(int pattern, int generationMax)
   {
@@ -196,8 +196,7 @@ class Life extends Vision
 
   void render()
   {    
-    int frame = 0;
-    if (frameCount % 1 == 0)
+    if (amplitude > 0.4f)
     {
       updateBoard();
     }

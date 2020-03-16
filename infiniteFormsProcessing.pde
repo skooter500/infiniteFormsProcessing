@@ -58,7 +58,12 @@ void setup()
   
   startMinim();
   loadAudio("mix.mp3");
+  
+  //startListening();
+  
+  
   visions.add(new WaveForm());
+  //visions.add(new Models1("infiniteForms.obj", -600));
   visions.add(new Cubes1());
   visions.add(new Cubes2(2, 150, -600));  
   visions.add(new Cubes2(7, 250, -600));  
@@ -66,9 +71,12 @@ void setup()
   visions.add(new Cubes2(50, 400, -900));
   visions.add(new Cubes3(20, 10000));  
   visions.add(new Rects());
+  visions.add(new Star(7, false, false));
+  
   //visions.add(new Circles());
   visions.add(new Star(12, false, false));
   visions.add(new FlowField());  
+  visions.add(new Life(0, 1000));
   
   for (Vision v : visions)
   {
@@ -78,7 +86,6 @@ void setup()
   previous = millis();
   
   frameSize = 256;
-  //startListening();
   
   ap.play();
 }
@@ -124,7 +131,7 @@ void startMinim()
     fft = new FFT(frameSize, sampleRate);
 
     bands = new float[(int) log2(frameSize)];
-      smoothedBands = new float[bands.length];
+    smoothedBands = new float[bands.length];
 
   }
 

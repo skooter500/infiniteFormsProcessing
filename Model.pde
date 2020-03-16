@@ -17,16 +17,15 @@ class Model
   {
     pushMatrix();
     strokeWeight(2);        
-    stroke((map(smoothedAmplitude, 0, 1, 0, 255) + colorOffset) % 255, 255, 255);
+    fill((map(smoothedAmplitude, 0, 1, 0, 255) + colorOffset) % 255, 255, 255);
     translate(position.x, position.y, position.z);       
-    
-    rotateY(angle);
-    rotateX(angle);
+    //noFill();
     strokeWeight(weight);
     float boxSize = size + (amplitude * 300); 
     smoothedBoxSize = lerp(smoothedBoxSize, boxSize, 0.2f);
-    
-    scale(smoothedBoxSize);
+    rotateY(90);
+    scale(10);
+    //scale(smoothedBoxSize);
     shape(s);
     angle+=0.01f;
     popMatrix();    
