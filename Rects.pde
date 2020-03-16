@@ -19,7 +19,7 @@ class Rects extends Vision
       fill(f, 255, 255);
       rect(width / 2, height / 2, w, h);
 
-      c = (c + speed);
+      c = (c - speed);
     }
   }
 }

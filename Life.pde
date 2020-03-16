@@ -155,7 +155,7 @@ class Life extends Vision
 
   void clearBoard()
   {
-    background(0);
+    background(255);
     for (int row = 0; row < boardHeight; row ++)
     {
       for (int col = 0; col < boardWidth; col ++)
@@ -269,7 +269,7 @@ class Life extends Vision
   void drawBoard()
   {
     colorMode(RGB);
-    fill(0, 10);
+    fill(255, 10);
     rectMode(CORNER);
     rect(0, 0, width, height);
     colorMode(HSB);
