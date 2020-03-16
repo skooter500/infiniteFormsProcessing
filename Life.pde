@@ -196,7 +196,7 @@ class Life extends Vision
 
   void render()
   {    
-    if (amplitude > 0.35f)
+    if (amplitude > map(mouseY, 0, height, 0.1, 0.4f))
     {
       updateBoard();
     }
