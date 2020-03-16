@@ -10,24 +10,23 @@ class Model
   Model(String fileName, float x, float y, float z)
   {
     s = loadShape(fileName);
-    position = new PVector(x, y, y);
+    position = new PVector(x, y, z);
   }
   
   void render()
   {
     pushMatrix();
-    strokeWeight(2);        
-    fill((map(smoothedAmplitude, 0, 1, 0, 255) + colorOffset) % 255, 255, 255);
+    //strokeWeight(2);        
+    //fill((map(smoothedAmplitude, 0, 1, 0, 255) + colorOffset) % 255, 255, 255);
     translate(position.x, position.y, position.z);       
     //noFill();
-    strokeWeight(weight);
+    //strokeWeight(weight);
     float boxSize = size + (amplitude * 300); 
     smoothedBoxSize = lerp(smoothedBoxSize, boxSize, 0.2f);
-    rotateY(90);
-    scale(10);
+    //scale(1);
     //scale(smoothedBoxSize);
     shape(s);
-    angle+=0.01f;
+    //angle+=0.01f;
     popMatrix();    
   }
   

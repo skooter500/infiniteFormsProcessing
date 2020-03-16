@@ -37,8 +37,8 @@ float smoothedAmplitude = 0;
 void setup()
 {  
   colorMode(HSB);
-  //size(800, 600, P3D);
-  fullScreen(P3D, SPAN);
+  size(800, 600, P3D);
+  //fullScreen(P3D, SPAN);
   noCursor();
   cx = width / 2;
   cy = height / 2;
@@ -61,9 +61,10 @@ void setup()
   
   //startListening();
   
+  visions.add(new Models1("infiniteForms.obj"));
   
+  visions.add(new Bands(200, 0, 0, 0));
   visions.add(new WaveForm());
-  //visions.add(new Models1("infiniteForms.obj", -600));
   visions.add(new Cubes1());
   visions.add(new Cubes2(2, 150, -600));  
   visions.add(new Cubes2(7, 250, -600));  
@@ -116,6 +117,8 @@ void draw()
   visions.get(vision).render();
 
   calculateAmplitude();
+  calculateFFT();
+  calculateFrequencyBands();
 
   speed = map(amplitude, 0, 1, 0, 0.1f);
   //numRects = (int) map(mouseY, 0, height, 5, 50);

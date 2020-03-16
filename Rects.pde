@@ -11,7 +11,7 @@ class Rects extends Vision
     noStroke();
     float wgap = width / count;
     float hgap = height / count;
-    float colorGap = 10;
+    float colorGap = 3;
     for (float i = count; i > 0; i --)
     {
       float w = i * wgap;
