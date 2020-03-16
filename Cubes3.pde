@@ -35,7 +35,7 @@ class Cubes3 extends Vision
     for(Cube c:cubes)
     {
       c.render();       
-      c.position.z += amplitude * 150;
+      c.position.z += amplitude * 300;
       if (c.position.z > 0)
       {
         c.position.x = random(-range, range);

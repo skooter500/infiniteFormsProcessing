@@ -67,14 +67,13 @@ void setup()
   visions.add(new Cubes1());
   visions.add(new Cubes2(2, 150, -600));  
   visions.add(new Cubes2(7, 250, -600));  
-  visions.add(new Cubes2(20, 300, -800));
-  visions.add(new Cubes2(50, 400, -900));
+  visions.add(new Cubes2(30, 150, -400));
   visions.add(new Cubes3(20, 10000));  
   visions.add(new Rects());
   visions.add(new Star(7, false, false));
   
   //visions.add(new Circles());
-  visions.add(new Star(12, false, false));
+  visions.add(new Star(3, false, false));
   visions.add(new FlowField());  
   visions.add(new Life(0, 1000));
   
