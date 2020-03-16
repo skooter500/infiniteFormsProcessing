@@ -37,8 +37,8 @@ float smoothedAmplitude = 0;
 void setup()
 {  
   colorMode(HSB);
-  size(800, 600, P3D);
-  //fullScreen(P3D, SPAN);
+  //size(800, 600, P3D);
+  fullScreen(P3D, SPAN);
   noCursor();
   cx = width / 2;
   cy = height / 2;
@@ -100,6 +100,17 @@ void keyPressed()
   {
     vision = (vision == 0) ? visions.size() - 1 : vision - 1 ;
   }
+  
+  if (key == 'w')
+  {
+    ap.cue(ap.position() + 30000);
+  }
+  
+  if (key == 's')
+  {
+    ap.cue(ap.position() - 30000);
+  }
+  
   visions.get(vision).restart();
 }
 
