@@ -1,6 +1,6 @@
 class Life extends Vision
 {
-
+  
   int boardWidth = 200;
   int boardHeight;
   float cellWidth;
@@ -8,66 +8,27 @@ class Life extends Vision
   float[][] nextBoard  = new float[boardHeight][boardWidth];
 
   int numAlive = 0;
-
+  
   int pattern = 0;
   int generation = 0;
-  int generationMax = 100;
-
+  int generationMax = 10000;
+  
   Life(int pattern, int generationMax)
   {
     this.pattern = pattern;
     this.generationMax = generationMax;
   }
-
+  
   void restart()
   {
     switch(pattern)
     {
-    case 0:
-      fShape(50,20);      
-      break;
-    case 1:
-      MakeGosperGun(50, 20);
-      break;
-    case 2:
-      crossShape();
-      break;
-    case 3:
-      boxShape();
-      break;
-    case 4:
-      randomize();
-      break;
-      
-    }
-  }
-  
-  void fShape(int x, int y)
-  {
-    clearBoard();
-    board[y][x] = random(255);
-    board[y+1][x] = random(255);
-    board[y+2][x] = random(255);
-    board[y][x+1] = random(255);
-    board[y+1][x-1] = random(255);
-  }
-
-  void boxShape()
-  {
-    clearBoard();
-    int y1 = (int)(boardHeight * 0.2);
-    int y2 = (int)(boardHeight * 0.8);
-    int x1 = (int)(boardWidth * 0.2);
-    int x2 = (int)(boardWidth * 0.8);
-    for (int y = y1; y < y2; y++)
-    {
-      board[y][x1] = random(255);
-      board[y][x2] = random(255);
-    }
-    for (int x = x1; x < x2; x++)
-    {
-      board[y1][x] = random(255);
-      board[y2][x] = random(255);
+      case 0:
+        crossShape();
+        break;
+      case 1:
+        randomize();
+        break;
     }
   }
 
@@ -87,7 +48,7 @@ class Life extends Vision
     }
   }
 
-
+  
 
   void xShape()
   {  
@@ -96,66 +57,14 @@ class Life extends Vision
     for (int i = 0; i < boardHeight; i ++)
     {
       board[i][i] = random(255);
+      board[(boardWidth - 1) - i][i] = random(255);
     }
   }
-
-  void MakeGosperGun(int x, int y)
-  {
-    clearBoard();
-    board[y + 23][x] = random(255);
-    board[y + 24][x] = random(255);
-    board[y + 34][x] = random(255);
-    board[y + 35][x] = random(255);
-
-    board[y + 22][x + 1] = random(255);
-    board[y + 24][x + 1] = random(255);
-    board[y + 34][x + 1] = random(255);
-    board[y + 35][x + 1] = random(255);
-
-    board[y + 0][x + 2] = random(255);
-    board[y + 1][x + 2] = random(255);
-    board[y + 9][x + 2] = random(255);
-    board[y + 10][x + 2] = random(255);
-    board[y + 22][x + 2] = random(255);
-    board[y + 23][x + 2] = random(255);
-
-    board[y + 0][x + 3] = random(255);
-    board[y + 1][x + 3] = random(255);
-    board[y + 8][x + 3] = random(255);
-    board[y + 10][x + 3] = random(255);
-
-    board[y + 8][x + 4] = random(255);
-    board[y + 9][x + 4] = random(255);
-    board[y + 16][x + 4] = random(255);
-    board[y + 17][x + 4] = random(255);
-
-    board[y + 16][x + 5] = random(255);
-    board[y + 18][x + 5] = random(255);
-
-    board[y + 16][x + 6] = random(255);
-
-    board[y + 35][x + 7] = random(255);
-    board[y + 36][x + 7] = random(255);
-
-    board[y + 35][x + 8] = random(255);
-    board[y + 37][x + 8] = random(255);
-
-    board[y + 35][x + 9] = random(255);
-
-    board[y + 24][x + 12] = random(255);
-    board[y + 25][x + 12] = random(255);
-    board[y + 26][x + 12] = random(255);
-
-    board[y + 24][x + 13] = random(255);
-
-    board[y + 25][x + 14] = random(255);
-  }
-
 
 
   void clearBoard()
   {
-    background(255);
+    background(0);
     for (int row = 0; row < boardHeight; row ++)
     {
       for (int col = 0; col < boardWidth; col ++)
@@ -174,7 +83,7 @@ class Life extends Vision
     nextBoard  = new float[boardHeight][boardWidth];
     restart();
   }
-
+  
   void updateBoard()
   {
     numAlive = 0;
@@ -220,7 +129,7 @@ class Life extends Vision
     } else return -1;
   }
 
-
+ 
   float randomAround(int row, int col)
   {
     float sum = 0;
@@ -269,7 +178,7 @@ class Life extends Vision
   void drawBoard()
   {
     colorMode(RGB);
-    fill(255, 10);
+    fill(0, 10);
     rectMode(CORNER);
     rect(0, 0, width, height);
     colorMode(HSB);
@@ -287,8 +196,7 @@ class Life extends Vision
 
   void render()
   {    
-    int frame = 0;
-    if (frameCount % 1 == 0)
+    if (amplitude > 0.35f)
     {
       updateBoard();
     }

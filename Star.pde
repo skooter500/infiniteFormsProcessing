@@ -39,9 +39,9 @@ class Star extends Vision
       drawStar(0, 0, radius, sides, col);
     }
     if (direction)
-      theta += speed/2;
+      theta += speed;
       else
-      theta -= speed/2;
+      theta -= speed;
     popStyle();
   }
 

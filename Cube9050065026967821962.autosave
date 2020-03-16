@@ -1,0 +1,10 @@
+class Cube
+{
+  PVector position = new PVector();
+
+  void render()
+  {
+
+  }  
+  
+}
