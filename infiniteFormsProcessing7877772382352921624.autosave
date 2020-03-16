@@ -1,0 +1,193 @@
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
+import ddf.minim.signals.*;
+import ddf.minim.spi.*;
+import ddf.minim.ugens.*;
+
+float c = 0;
+float speed = 0.0f;
+
+float cx;
+float cy;
+float sat = 255;
+float value = 255;
+
+ArrayList<Vision> visions = new ArrayList<Vision>();
+
+int vision = 0;
+
+float timeDelta = 0;
+
+int frameSize = 512;
+int sampleRate = 44100;
+
+float[] bands;
+float[] smoothedBands;
+
+Minim minim;
+AudioInput ai;
+AudioPlayer ap;
+AudioBuffer ab;
+FFT fft;
+
+float amplitude  = 0;
+float smoothedAmplitude = 0;
+
+void setup()
+{  
+  colorMode(HSB);
+  //size(800, 600, P3D);
+  fullScreen(P3D, SPAN);
+  noCursor();
+  cx = width / 2;
+  cy = height / 2;
+
+
+  /*visions.add(new Kaleidoscope(linePainter));
+  visions.add(new Kaleidoscope(circlePainter));
+  visions.add(new Life(0, 200));
+  visions.add(new Life(1, 200));
+  visions.add(new Rects());
+  visions.add(new Circles());
+  //visions.add(new Triangles());
+  visions.add(new FlowField());
+  */
+  //
+  //visions.add(new Cubes2(2, 100, -250));
+  
+  startMinim();
+  loadAudio("mix.mp3");
+  
+  //startListening();
+  
+  
+  visions.add(new WaveForm());
+  visions.add(new Models1("infiniteForms.obj", -600));
+  visions.add(new Cubes1());
+  visions.add(new Cubes2(2, 150, -600));  
+  visions.add(new Cubes2(7, 250, -600));  
+  visions.add(new Cubes2(20, 300, -800));
+  visions.add(new Cubes2(50, 400, -900));
+  visions.add(new Cubes3(20, 10000));  
+  visions.add(new Rects());
+  visions.add(new Star(7, false, false));
+  
+  //visions.add(new Circles());
+  visions.add(new Star(12, false, false));
+  visions.add(new FlowField());  
+  visions.add(new Life(0, 1000));
+  
+  for (Vision v : visions)
+  {
+    v.initialize();
+  }
+  background(0);
+  previous = millis();
+  
+  frameSize = 256;
+  
+  ap.play();
+}
+
+void keyPressed()
+{
+  if (keyCode == RIGHT)
+  {
+    vision = (vision + 1) % visions.size();
+  }
+  if (keyCode == LEFT)
+  {
+    vision = (vision == 0) ? visions.size() - 1 : vision - 1 ;
+  }
+  visions.get(vision).restart();
+}
+
+long previous;
+float colorOffset = 0;
+
+void draw()
+{
+  long now = millis();
+  timeDelta = (now - previous) / 1000.0f;
+  previous = now;
+  float cc = mouseX % 256.0f;
+  //background(cc, 255, 255);
+  //background(random(0, 255), 255, 255);
+  visions.get(vision).render();
+
+  calculateAmplitude();
+
+  speed = map(amplitude, 0, 1, 0, 0.1f);
+  //numRects = (int) map(mouseY, 0, height, 5, 50);
+  //println(frameRate);
+  //colorOffset += 0.1f;
+}
+
+void startMinim() 
+  {
+    minim = new Minim(this);
+
+    fft = new FFT(frameSize, sampleRate);
+
+    bands = new float[(int) log2(frameSize)];
+    smoothedBands = new float[bands.length];
+
+  }
+
+  float log2(float f) {
+    return log(f) / log(2.0f);
+  }
+
+  void calculateFFT()
+  {
+    fft.window(FFT.HAMMING);
+    if (ab != null)
+    {
+      fft.forward(ab);
+    }
+    else
+    {
+      println("You must call startListening or loadAudio before calling fft");
+    }
+  }
+
+  
+  void calculateAmplitude()
+  {
+    float total = 0;
+    for(int i = 0 ; i < ab.size() ; i ++)
+        {
+      total += abs(ab.get(i));
+    }
+    amplitude = total / ab.size();
+    smoothedAmplitude = lerp(smoothedAmplitude, amplitude, 0.1f);
+  }
+
+
+  void calculateFrequencyBands() {
+    for (int i = 0; i < bands.length; i++) {
+      int start = (int) pow(2, i) - 1;
+      int w = (int) pow(2, i);
+      int end = start + w;
+      float average = 0;
+      for (int j = start; j < end; j++) {
+        average += fft.getBand(j) * (j + 1);
+      }
+      average /= (float) w;
+      bands[i] = average * 5.0f;
+      smoothedBands[i] = lerp(smoothedBands[i], bands[i], 0.05f);
+    }
+  }
+
+  void startListening()
+  {
+    ai = minim.getLineIn(Minim.MONO, width, 44100, 16);
+    ab = ai.left;
+  }
+
+  void loadAudio(String filename)
+  {
+    ap = minim.loadFile(filename, frameSize);
+    ab = ap.left;
+  }
