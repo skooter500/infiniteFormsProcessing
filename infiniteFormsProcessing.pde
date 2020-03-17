@@ -19,7 +19,7 @@ int vision = 0;
 
 float timeDelta = 0;
 
-int frameSize = 512;
+int frameSize = 256;
 int sampleRate = 44100;
 
 float[] bands;
@@ -57,14 +57,17 @@ void setup()
   //visions.add(new Cubes2(2, 100, -250));
   
   startMinim();
+  frameSize = 256;
   loadAudio("mix.mp3");
   
   //startListening();
   
   visions.add(new Models1("infiniteForms.obj"));
-  
+  visions.add(new Terrain());
   visions.add(new Bands(200, 0, 0, 0));
   visions.add(new WaveForm());
+  visions.add(new Models1("niksg.obj"));
+  
   visions.add(new Cubes1());
   visions.add(new Cubes2(2, 150, -600));  
   visions.add(new Cubes2(7, 250, -600));  
@@ -77,6 +80,11 @@ void setup()
   visions.add(new Star(3, false, false));
   visions.add(new FlowField());  
   visions.add(new Life(0, 1000));
+  visions.add(new Life(2, 1000));
+  
+  visions.add(new Life(1, 1000));
+  visions.add(new Terrain());
+  
   
   for (Vision v : visions)
   {
@@ -87,7 +95,7 @@ void setup()
   
   frameSize = 256;
   
-  ap.play();
+  
 }
 
 void keyPressed()
@@ -110,7 +118,11 @@ void keyPressed()
   {
     ap.cue(ap.position() - 30000);
   }
-  
+  if (key == ' ')
+  {
+    ap.cue(0);
+    ap.play();
+  }  
   visions.get(vision).restart();
 }
 
