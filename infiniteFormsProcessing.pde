@@ -57,9 +57,9 @@ void setup()
   //visions.add(new Cubes2(2, 100, -250));
   
   startMinim();
-  loadAudio("mix.mp3");
+  //loadAudio("mix.mp3");
   
-  //startListening();
+  startListening();
   
   visions.add(new Models1("infiniteForms.obj"));
   
@@ -87,7 +87,7 @@ void setup()
   
   frameSize = 256;
   
-  ap.play();
+  //ap.play();
 }
 
 void keyPressed()

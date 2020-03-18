@@ -24,7 +24,7 @@ class Model
   {
     pushMatrix();
     //strokeWeight(2);        
-    s.setFill(color(c % 255, 255, 255));
+    s.setFill(color(c % 255, 255, 255, 240));
     translate(position.x, position.y, position.z);       
     
     //strokeWeight(weight);
