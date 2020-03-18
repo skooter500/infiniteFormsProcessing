@@ -12,7 +12,7 @@ class Models1 extends Vision
     background(0);
     noFill();
     lights();
-    stroke(map(smoothedAmplitude, 0, 1, 0, 255), 255, 255);
+    stroke(map(smoothedAmplitude, 0, 1, 0, 255), 255, 200);
     pushMatrix();    
     camera(0, 150, -300, 20, 20, 0, 0, 1, 0);
     model.render();

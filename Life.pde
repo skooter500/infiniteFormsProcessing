@@ -29,7 +29,34 @@ class Life extends Vision
       case 1:
         randomize();
         break;
+      case 2:
+        boxShape();
+        break;
     }
+  }
+  
+  void boxShape()
+  {
+    clearBoard();
+    int x1 = (int)(boardWidth * 0.2f);
+    int x2 = (int)(boardWidth * 0.8f);
+    
+    for (int col = x1; col < x2; col++)
+    {
+        board[(int)(boardHeight * 0.2f)][col] = random(255);
+        board[(int)(boardHeight * 0.8f)][col] = random(255);
+    }
+    
+    x1 = (int)(boardHeight * 0.2f);
+    x2 = (int)(boardHeight * 0.8f);
+    
+    
+    for (int row = x1; row < x2; row++)
+    {
+        board[row][(int)(boardWidth * 0.2f)] = random(255);
+        board[row][(int)(boardWidth * 0.8f)] = random(255);
+    }
+    
   }
 
   void crossShape()

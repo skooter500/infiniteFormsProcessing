@@ -31,10 +31,11 @@ class Bands extends Vision
     for(int i = 0 ; i < positions.length ; i ++)
     {
       pushMatrix();
-      fill(map(i, 0, positions.length, 0, 255), 255, 255);
-      noStroke();
+      stroke(map(i, 0, positions.length, 0, 255), 255, 255);
+      noFill();
+      strokeWeight(2);
       float base = 40;
-      float boxSize = base + (smoothedBands[i] * 1); 
+      float boxSize = base + (smoothedBands[i] * 2); 
       smoothedBoxSize = lerp(smoothedBoxSize, boxSize, 0.2f);                 
       
       translate(positions[i].x, positions[i].y, positions[i].z + (smoothedBoxSize * 0.5f));

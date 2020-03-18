@@ -25,7 +25,7 @@ class Star extends Vision
     for (float radius = 0; radius < width * 1.6; radius += 40)
     {
       float t = map(sin(theta + offset), -1.0f, 1.0f, 0.0f, 1.0f);
-      color col = color(map(sin(theta + offset * 0.3f), -1, 1, 0, 255), 255, 255) ; // lerpColor(from, to, t);
+      color col = color(map(sin(theta + offset), -1, 1, 0, 255), 255, 255) ; // lerpColor(from, to, t);
       if (rotate)
       {
         rotate(speed);

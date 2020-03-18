@@ -27,7 +27,7 @@ class Cube
     if (useAmplitude)
     {
       float boxSize = size + (amplitude * 300); 
-      smoothedBoxSize = lerp(smoothedBoxSize, boxSize, 0.2f);                 
+      smoothedBoxSize = lerp(smoothedBoxSize, boxSize, 0.1f);                 
       box(smoothedBoxSize);
     }
     else

@@ -24,7 +24,8 @@ class WaveForm extends Vision
             );
 
             float x = map(i, 0, ab.size(), 0, width);
-            rect(x, cy, w, 1 + cy * 2 * lerpedAb[i]);
+            rect(x, cy, w, -1 - cy * 6 * abs(lerpedAb[i]));
+            rect(x, cy, w, +1 + cy * 6 * abs(lerpedAb[i]));
             lerpedAb[i] = lerp(lerpedAb[i], ab.get(i), 0.1f);
         }
     }
