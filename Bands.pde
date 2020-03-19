@@ -1,4 +1,4 @@
-class Bands extends Vision
+  class Bands extends Vision
 {
   PVector[] positions;
   

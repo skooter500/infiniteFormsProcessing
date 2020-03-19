@@ -37,8 +37,8 @@ float smoothedAmplitude = 0;
 void setup()
 {  
   colorMode(HSB);
-  //size(800, 600, P3D);
-  fullScreen(P3D, SPAN);
+  size(800, 600, P3D);
+  //fullScreen(P3D, SPAN);
   noCursor();
   cx = width / 2;
   cy = height / 2;
@@ -61,6 +61,7 @@ void setup()
   loadAudio("mix.mp3");  
   //startListening();
   
+  visions.add(new City());
   visions.add(new Models1("infiniteForms.obj"));
   visions.add(new Terrain());
   visions.add(new Bands(200, 0, 0, 0));
@@ -94,27 +95,48 @@ void setup()
   ap.play();
 }
 
+boolean[] keys = new boolean[526];
+
 void keyPressed()
+{ 
+  keys[keyCode] = true;
+}
+ 
+void keyReleased()
 {
-  if (keyCode == RIGHT)
+  keys[keyCode] = false; 
+}
+
+boolean checkKey(int k)
+{
+  if (keys.length >= k) 
+  {
+    return keys[k] || keys[Character.toUpperCase(k)];  
+  }
+  return false;
+}
+
+void handleInput()
+{
+  if (keys[RIGHT])
   {
     vision = (vision + 1) % visions.size();
   }
-  if (keyCode == LEFT)
+  if (keys[LEFT])
   {
     vision = (vision == 0) ? visions.size() - 1 : vision - 1 ;
   }
   
-  if (key == 'w')
+  if (keys['w'])
   {
     ap.cue(ap.position() + 30000);
   }
   
-  if (key == 's')
+  if (keys['s'])
   {
     ap.cue(ap.position() - 30000);
   }
-  if (key == ' ')
+  if (keys[' '])
   {
     ap.cue(0);
     ap.play();
@@ -132,6 +154,7 @@ void draw()
   timeDelta = (now - previous) / 1000.0f;
   previous = now;
   float cc = mouseX % 256.0f;
+  handleInput();
   //background(cc, 255, 255);
   //background(random(0, 255), 255, 255);
   visions.get(vision).render();
