@@ -5,6 +5,14 @@ class Cubes3 extends Vision
   float range = 2000;
   int numCubes;
   
+  void restart()
+  {
+    for(Cube c:cubes)
+    {
+      c.smoothedBoxSize = 0;
+    }
+  }
+  
   Cubes3(int numCubes, float z)
   {
     cubes = new Cube[numCubes];

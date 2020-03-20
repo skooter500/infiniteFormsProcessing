@@ -35,12 +35,10 @@
       noFill();
       strokeWeight(2);
       float base = 40;
-      float boxSize = base + (smoothedBands[i] * 2); 
-      smoothedBoxSize = lerp(smoothedBoxSize, boxSize, 0.2f);                 
-      
-      translate(positions[i].x, positions[i].y, positions[i].z + (smoothedBoxSize * 0.5f));
+      float boxSize = base + (smoothedBands[i] * 2);       
+      translate(positions[i].x, positions[i].y, positions[i].z + (boxSize * 0.5f));
       rotateZ(map(i, 0, positions.length, 0, TWO_PI));
-      box(base, base, smoothedBoxSize);
+      box(base, base, boxSize);
       popMatrix();
     }
     rot += speed * amplitude;

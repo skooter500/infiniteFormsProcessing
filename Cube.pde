@@ -9,6 +9,7 @@ class Cube
   
   boolean useAmplitude = true;
   
+  
   Cube(float x, float y, float z)
   {
     position = new PVector(x, y, z);

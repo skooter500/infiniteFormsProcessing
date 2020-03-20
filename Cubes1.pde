@@ -1,6 +1,12 @@
 class Cubes1 extends Vision
 {
   Cube cube = new Cube(0, 0, -250);
+  
+  void restart()
+  {
+    cube.smoothedBoxSize = 0;
+  }
+  
   void render()
   {
     background(0);

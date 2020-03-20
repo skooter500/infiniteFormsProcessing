@@ -7,6 +7,11 @@ class Models1 extends Vision
     model = new Model(fileName, 0, 0, 0);    
   }
   
+  void restart()
+  {
+    model.smoothedBoxSize = 0;
+  }
+  
   void render()
   {
     background(0);

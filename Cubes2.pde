@@ -3,6 +3,14 @@ class Cubes2 extends Vision
   Cube[] cubes;
   float z = 0;
   
+  void restart()
+  {
+    for(Cube c:cubes)
+    {
+      c.smoothedBoxSize = 0;
+    }
+  }
+  
   Cubes2(int numCubes, float radius, float z)
   {
     cubes = new Cube[numCubes];
