@@ -58,13 +58,14 @@ void setup()
   
   startMinim();
   frameSize = 256;
-  //loadAudio("mix.mp3");  
-  startListening();
+  loadAudio("soundscape.mp3");  
+  //startListening();
   
-  visions.add(new City());
   visions.add(new Models1("infiniteForms.obj"));
   visions.add(new Terrain());
   visions.add(new Bands(200, 0, 0, 0));
+  visions.add(new City());
+
   visions.add(new WaveForm());
   visions.add(new Models1("niksg.obj"));
   
