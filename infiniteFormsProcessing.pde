@@ -58,9 +58,11 @@ void setup()
   
   startMinim();
   frameSize = 256;
-  loadAudio("soundscape.mp3");  
+  loadAudio("mix.mp3");  
   //startListening();
   
+  visions.add(new Flower());
+  visions.add(new ClusterVisual());
   visions.add(new Models1("infiniteForms.obj"));
   visions.add(new Terrain());
   visions.add(new Bands(200, 0, 0, 0));
